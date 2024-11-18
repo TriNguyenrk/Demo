@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Chi Tiết Ô Tô</title>
+    <link rel="stylesheet" href="/stylesheets/i.css" />
+    <script>
+        function validateForm() {
+            const name = document.getElementById('Name').value;
+            const price = document.getElementById('Price').value;
+            const year = document.getElementById('Year').value;
+
+            if (!/^[a-zA-Z\s]+$/.test(name)) {
+                alert('Name phải chỉ chứa chữ cái và khoảng trắng');
+                return false;
+            }
+
+            if (isNaN(price)) {
+                alert('Price phải là số');
+                return false;
+            }
+
+            if (isNaN(year) || year < 1980 || year > 2024) {
+                alert('Year phải từ 1980 đến 2024');
+                return false;
+            }
+
+            return true;
+        }
+    </script>
+</head>
+<body>
+<header>
+    <h1>Thông Tin Ô Tô</h1>
+</header>
+<div class="container">
+    <p class="centered">Mã Xe: <%= car.MaXe %></p>
+    <form action="/car/<%= car._id %>/edit" method="POST" onsubmit="return validateForm()">
+
+        <input type="text" id="Name" name="Name" value="<%= car.Name %>">
+
+        <input type="number" id="Price" name="Price" value="<%= car.Price %>">
+
+        <input type="number" id="Year" name="Year" value="<%= car.Year %>">
+
+        <input type="text" id="Brand" name="Brand" value="<%= car.Brand %>">
+
+        <div class="button-group centered">
+            <button type="submit">Cập Nhật</button>
+            <button type="submit" formaction="/car/<%= car._id %>/delete"
+                    onclick="return confirm('Bạn có chắc muốn xóa không?')">Xóa</button>
+        </div>
+    </form>
+</div>
+</body>
+</html>
